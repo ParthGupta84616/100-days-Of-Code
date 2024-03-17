@@ -1,0 +1,83 @@
+Mohan and Rohan are celebrating Diwali by playing an exciting game with their friends. They each have their own set of cards, Mohan's cards represented by the array M and Rohan's cards by the array R. These cards have either numbers or symbols on them. The numbers denote the amount of sweets they can enjoy, while the symbols indicate specific actions they must perform.
+
+The available symbols are: ‘D’: Double the current score ‘H’: Half the current score
+
+The game rules are:
+
+Both players start with a score of zero.
+They take turns selecting a card from their respective arrays and add its value to their current score based on the card's nature:
+If the card is a number, they simply add that number to their current score.
+If the card is 'D', they double their current score.
+If the card is 'H', they halve their current score.
+They continue to play in turns until they have no more cards left in their array and the player with the highest score is declared winner.
+
+Input Format
+
+The First line of input is T, the number of testcases.
+The First line of each testcase is N, the number of cards in each array M and R.
+The Second line of each testcase is array M where ith value represents the value of ith card M[i].
+The Third line of each testcase is array R where ith value represents the value of ith card R[i].
+Constraints
+
+1<=T<=100
+1<=N<=5,00
+1<=M[i]<=9,M[i]=='D'||'H'
+1<=R[i]<=9,R[i]=='D'||'H'
+Output Format
+
+Return the Name and score of the winner among Mohan and Rohan. For example if Rohan is winner and his score is 20, Print "Rohan 20"
+
+Sample Input 0
+
+1
+5
+2 H 8 D 1
+9 H H 8 D
+Sample Output 0
+
+Rohan 20
+Explanation 0
+
+M - [2, H, 8, D, 1]
+
+Current score= M[0] =2
+Now M[1] =’H’, half the current score; Current score = 1
+M[2] =8, add 8 to the Current score; Current score = 9
+M[3] =’D’, double the Current score; Current score= 18
+M[4] = 1, add 1 to the Current score; Current score = 19
+Similarly, R- [9, H, H, 8, D]
+
+Current score=20
+
+Hence, the Winner is Rohan
+
+total_cases=int(input())
+
+def game(person):
+    score=0
+    for values in person:
+        if values.isnumeric():
+            Fscore=int(values)
+            score=score+Fscore
+        elif type(values)==str:
+            if values=="H":
+                if score%2==0:
+                    score=score/2
+                else:
+                    score=(score-1)/2
+            elif values=="D":
+                score=score*2
+            elif values==" ":
+                pass
+    return int(score)
+
+for cases in range(total_cases):
+    total_useless_inputs=input()
+    Mohan=input()
+    Rohan=input()
+   
+    if game(Mohan)>game(Rohan):
+        print(f"Mohan {game(Mohan)}")
+    else:
+        print(f"Rohan {game(Rohan)}")
+    
