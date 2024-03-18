@@ -1,0 +1,57 @@
+Diwali, the festival of lights, is here, and Meera is getting ready to illuminate her house. She has a series of lights, each representing a different Diwali lamp. The brightness of each lamp is symbolized by a positive integer in an array. Meera wants to create a stunning Diwali display, and she can achieve this by rotating the array in a specific direction and a certain number of times. The direction and the number of rotations are determined by two integers: direction and noOfRotations.
+
+Rules for rotation:
+
+The direction can have value either 0 or 1
+If direction is 0, Meera should rotate the array to the left by noOfRotations time, and
+If direction is 1, Meera should rotate the array to the right by noOfRotations time
+Input Format
+
+The First line will indicate T, the number of testcases
+The First line of each testcase will contain direction, noOfRotations and number of lights in series N.
+The Second line of each testcase is series of lights, where L[i] represents brightness of each light.
+Constraints
+
+1<=T<=500
+direction = {0,1}
+1<=noOfRotations<=N<=1000
+1<=L[i]<=10,000
+Output Format
+
+For each testcase after performing the rotation, output the arrangement of lights in the array, showcasing the vibrant Diwali atmosphere she has created.
+
+Sample Input 0
+
+1
+0 3 9
+1 2 3 4 5 6 7 8 9
+Sample Output 0
+
+4 5 6 7 8 9 1 2 3
+Explanation 0
+
+directrion = 0
+noOfRotations = 3
+N = 9
+therefore, we rotate the array to left by 3 lights
+
+
+total_cases=int(input())
+for cases in range(total_cases):
+    def LED():
+        line_two=input()
+        led_arr=input()
+        sec_list = list(map(int, line_two.split()))
+        led_list = list(map(int, led_arr.split()))
+        if sec_list[0]==1:
+            for times in range(sec_list[1]):
+                led_list = led_list[-1:] + led_list[:-1]
+            return led_list
+        else:
+            for times in range(sec_list[1]):
+
+                led_list = led_list[1:] + [led_list[0]]
+            return led_list
+
+    LED= " ".join(map(str, LED()))
+    print(LED)
