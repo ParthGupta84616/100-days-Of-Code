@@ -1,0 +1,72 @@
+Dev has a palindromic string of lowercase English letters palindrome, he needs to perform a pruning operation on string that is to replace exactly one character with any lowercase English letter so that the resulting string is not a palindrome and that it is the lexicographically smallest one possible.
+
+Help Dev write a code that outputs the resulting string after performing pruning operation. If there is no way to replace a character to make it not a palindrome, output -1.
+
+Input Format
+
+The first line will be T, the number of testcases.
+Each testcase will provide a palindromic string that needs to be pruned.
+Constraints
+
+1<=T<=1000
+1 <= palindrome.length <= 1000
+palindrome consists of only lowercase English letters.
+Output Format
+
+For each testcase output the lexicographically smallest resulting (non palindromic) string after pruning operation.
+Sample Input 0
+
+1
+azbbza
+Sample Output 0
+
+aabbza
+Explanation 0
+
+There are many ways to make "azbbza" not a palindrome, such as "zzbbza", "aabbza", and "azabza".
+Of all the ways, "aabbza" is the lexicographically smallest.
+Sample Input 1
+
+1
+a
+Sample Output 1
+
+-1
+
+
+def is_palindrome(input_string):
+    input_string = ''.join(c for c in input_string if c.isalnum())
+    return input_string == input_string[::-1]
+
+cases = int(input())
+
+for _ in range(cases):
+    input_string = input()
+
+    if is_palindrome(input_string):
+        if len(input_string) >= 2:
+            input_list = list(input_string)
+            changed = False
+
+            for i in range(len(input_list)):
+                if input_list[i] != 'a':
+                    input_list[i] = 'a'
+                    changed = True
+                    break
+
+            if all(char == input_list[0] for char in input_list):
+                input_list[-1] = 'b'
+                changed = True
+                # print("Hello")
+
+            if changed:
+                modified_string = ''.join(input_list)
+                print(modified_string)
+            else:
+                print("-1")
+
+        else:
+            print("-1")
+
+    else:
+        print("-1")
