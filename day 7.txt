@@ -1,0 +1,67 @@
+Diwali is around the corner and you have to send greetings to your family and friends. You are given an array of strings representing Diwali greetings. However, these greetings are combined together, and you need to separate them into individual wishes. The greetings are joined using separator symbols which can be any character like- ‘ . ’ , ‘@’ etc . Your task is to split these strings and create and output a list of individual Diwali wishes.
+
+Input Format
+
+The First Line will be T, the number of testcases.
+Each testcase will provide with the string containing alphabets (lowercase) and special characters.
+Constraints
+
+1<=T<=500
+1<=S.size()<=1000
+S contains alphanumeric characters and special symbols {~,!,@,#,$,%,^,&,*,(,),_,+}
+Output Format
+
+For each testcase output the list of string containing greetings.
+
+Sample Input 0
+
+1
+happy@diwali!to_you
+Sample Output 0
+
+happy
+diwali
+to
+you
+Sample Input 1
+
+1
+@hare!!@#krishna@
+Sample Output 1
+
+hare
+krishna
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() { 
+    int t;
+    cin>>t;
+    for(int i=0;i<t;i++){
+        string s;
+        cin>>s;
+        int l=s.length();
+        while(!islower(s[l-1])){
+            l-=1;
+        }
+        for(int j=0;j<l;j++){
+            if(islower(s[j])){
+                cout<<s[j];
+            }
+            else if(!islower(s[j]) && !islower(s[j-1])){
+                continue;
+            }
+            else{
+                cout<<"\n";
+            }
+        }         
+        cout<<"\n";
+    }
+    return 0;
+}
