@@ -1,0 +1,71 @@
+The maximum pair sum is minimized.
+Output the minimized maximum pair sum after optimally pairing up the players.
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give n.
+The Second line of each testcase will give array jerseyNumber of length n.
+Constraints
+
+1<=T<=1000
+n is even.
+2<=n<=10^5
+1<=jerseyNumber[i]<=10^9
+Output Format
+
+For each testcase output the minimized maximum pair sum after optimally pairing up the players.
+Sample Input 0
+
+1
+4
+3 5 2 3
+Sample Output 0
+
+7
+Explanation 0
+
+The players can be paired up into pairs (3,3) and (5,2). The maximum pair sum is max(3+3, 5+2) = max(6, 7) = 7.
+
+Sample Input 1
+
+1
+6
+3 5 4 2 4 6
+Sample Output 1
+
+8
+Explanation 1
+
+The players can be paired up into pairs (3,5), (4,4), and (6,2). The maximum pair sum is max(3+5, 4+4, 6+2) = max(8, 8, 8) = 8.
+
+def minimize_max_pair_sum(jersey_numbers):
+
+    jersey_numbers.sort()
+
+    min_pair_sum = 0
+
+    max_pair_sum = 0
+
+
+    for i in range(len(jersey_numbers) // 2):
+
+        pair_sum = jersey_numbers[i] + jersey_numbers[-i - 1]
+
+        if pair_sum > max_pair_sum:
+
+            max_pair_sum = pair_sum
+
+    return max_pair_sum
+
+T = int(input(""))
+
+for _ in range(T):
+
+    n = int(input(""))
+
+    jersey_numbers = list(map(int, input("").split()))
+
+    result = minimize_max_pair_sum(jersey_numbers)
+
+    print(result)
