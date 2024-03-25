@@ -1,0 +1,92 @@
+Ram and Priya are digital artists participating in a Pixel Art Challenge, where they are creating mesmerizing artwork on a digital canvas. The canvas is represented as a 2D grid of pixels, where each pixel can either be illuminated (1) or in shadow (0). Each pixel interacts with its eight neighbors (horizontal, vertical, diagonal) using the following four rules-
+
+Any pixel with fewer than two illuminated(1) neighbors is shadowed(0)
+Any pixel with two or three illuminated(1) neighbors remains illuminated(1)
+Any pixel with more than three illuminated(1) neighbors gets shadowed(0)
+Any shadowed(0) pixel with exactly three illuminated(1) neighbors becomes an illuminated(1) pixel
+The next state is created by applying the above rules simultaneously to every pixel in the current state, where illumination and shadowing occur simultaneously. The challenge involves creating the artwork through iterations based on the rules. Your task is to output the next state after applying the above rules to the given mxn grid.
+
+Input Format
+
+First line will be T, the number of testcases. The first line of each testcase will give m and n. The next lines will provide the pixel matrix.
+
+Constraints
+
+1<=T<=10^3 1<=m,n<=25 matrix[i][j] is 0 or 1
+
+Output Format
+
+for each testcase output the next state of matrix.
+
+Sample Input 0
+
+1
+4 3
+0 1 0
+0 0 1
+1 1 1
+0 0 0
+Sample Output 0
+
+0 0 0
+1 0 1
+0 1 1
+0 1 0
+Sample Input 1
+
+1
+2 2
+1 1
+1 0
+Sample Output 1
+
+1 1
+1 1
+
+
+def next_state(canvas):
+    rows = len(canvas)
+    cols = len(canvas[0])
+
+    def count_illuminated_neighbors(x, y):
+        count = 0
+        directions = [(0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (1, -1), (-1, 1), (-1, -1)]
+
+        for dx, dy in directions:
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < rows and 0 <= ny < cols and canvas[nx][ny] == 1:
+                count += 1
+        return count
+    next_canvas = [[0] * cols for _ in range(rows)]
+
+    for i in range(rows):
+        for j in range(cols):
+            illuminated_neighbors = count_illuminated_neighbors(i, j)
+
+            if canvas[i][j] == 1:
+                if illuminated_neighbors < 2 or illuminated_neighbors > 3:
+                    next_canvas[i][j] = 0
+                else:
+                    next_canvas[i][j] = 1
+            else:
+                if illuminated_neighbors == 3:
+                    next_canvas[i][j] = 1
+
+    return next_canvas
+
+# Input
+T = int(input())
+for _ in range(T):
+    size_line = input().split()
+    rows = int(size_line[0])
+    cols = int(size_line[1])
+
+    initial_canvas = []
+    for _ in range(rows):
+        row_data = list(map(int, input().split()))
+        initial_canvas.append(row_data)
+
+    # Generate and print the next state
+    result = next_state(initial_canvas)
+    for row in result:
+        print(" ".join(map(str, row)))
