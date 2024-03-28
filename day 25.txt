@@ -1,0 +1,113 @@
+Om and Ram decided to play an interesting game with their family members to enjoy the weekend, in which they gave everyone tickets consisting of a square matrix. Rules for deciding the winner are- At all the diagonal elements must be non zero All other elements should be zero
+
+Task for you is to design a program which will output whether the participant is the winner or not depending upon the above conditions of the game.
+
+Input Format
+
+The first line contains an integer T, the number of test cases.
+
+For each test case:
+
+The first line contains two integers m and n, representing the dimensions of the matrix.
+
+The next m lines contain n integers each, representing the elements of the matrix.
+
+Constraints
+
+1 <= T <= 100
+
+3 <= m, n <= 100:
+
+-100000<=matrix[i][j]<=100000
+
+Output Format
+
+For each test case, output a single line: "true" if the participant is the winner. "false" if the the participant is not the winner.
+
+Sample Input 0
+
+1
+3 3
+5 7 0
+0 3 1
+0 5 0
+Sample Output 0
+
+false
+Sample Input 1
+
+1
+4 4
+2 0 0 1
+0 3 1 0
+0 5 2 0
+4 0 0 2
+Sample Output 1
+
+true
+
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+bool for_diagonal(int a[100][100],int m,int n){
+    int c=0,d=0;
+    for(int i=0;i<m;i++){
+        for(int j=0;j<n;j++){
+            if(i==j && a[i][j]==0){
+                c+=1;
+            }
+            else if((i==n-1-j) && a[i][j]==0){
+                d+=1;
+            }
+        }
+    }
+    if(c==0 && d==0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+bool for_other(int a[100][100],int m,int n){
+    int c=0;
+    for(int i=0;i<m;i++){
+        for(int j=0;j<n;j++){
+            if((i!=j && i!=n-1-j) && a[i][j]!=0){
+                c+=1;    
+            }
+        }
+    }
+    if(c==0){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+int main() {
+    int T;
+    cin>>T;
+    while(T--){
+        int m,n;
+        cin>>m>>n;
+        int a[100][100];
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                cin>>a[i][j];
+            }
+        }
+        bool c=for_diagonal(a,m,n);
+        bool d=for_other(a,m,n);
+        if(c==true && d==true){
+            cout<<"true"<<endl;
+        }
+        else{
+            cout<<"false"<<endl;
+        }
+    }
+    return 0;
+}
