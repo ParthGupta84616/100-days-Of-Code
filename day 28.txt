@@ -1,0 +1,51 @@
+Mikasa and Eren are observing a galaxy cluster. There are N stars in the cluster where the i th star has a spectral type of S[i].
+
+Mikasa decides to record some of these N stars in her telescope. Eren decides that he will record all the stars left in the cluster after Mikasa has finished.
+
+Find out whether it is possible that Mikasa and Eren end up with exactly same multiset of spectral types.
+
+Input Format
+
+The first line will give T, the number of Testcases.
+The first line of each testcase will give N, the number of stars in the cluster.
+The second line will give the array S.
+Constraints
+
+1<=T<=1000
+1<=N<=10000
+1<=S[i]<=10000
+Output Format
+
+For each testcase, print yes if it is possible that Mikasa and Eren end up with exactly same multiset of spectral types else print no
+
+Sample Input 0
+
+1
+6
+1 2 3 3 2 1
+Sample Output 0
+
+yes
+Explanation 0
+
+Mikasa :- 1 2 3 Eren :- 3 2 1 same multiset possible
+
+
+from collections import Counter
+
+def is_same_multiset(spectral_types):
+    count = Counter(spectral_types)
+    for frequency in count.values():
+        if frequency % 2 != 0:
+            return "no"
+    return "yes"
+
+T = int(input())
+for _ in range(T):
+    N = int(input())
+    spectral_types = list(map(int, input().split()))
+
+    result = is_same_multiset(spectral_types)
+
+    print(result)
+
