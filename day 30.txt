@@ -1,0 +1,108 @@
+You are given a string s of alphanumeric characters, write a code that outputs the string by modifying it such that all the characters are sorted in descending order of their frequencies. If there exist two characters with the same frequency output them in ascending order of their ASCII values.
+
+Input Format
+
+The First line will give T, the number of testcases.
+Each testcase will provide you with the string s.
+Constraints
+
+1<=T<=1000
+s.length <= 10000
+Output Format
+
+Output the modified string.
+
+Sample Input 0
+
+1
+tree
+Sample Output 0
+
+eert
+Explanation 0
+
+'e' appears twice while 'r' and 't' both appear once. So 'e' must appear before both 'r' and 't'. And 'r' must appear before 't' as its ascii value is smaller.
+
+
+#include <stdio.h>
+
+#include <string.h>
+
+
+struct CharInfo {
+
+    int frequency;
+
+    int ascii;
+
+};
+
+int compare(const void* a, const void* b) {
+
+    struct CharInfo* charA = (struct CharInfo*)a;
+
+    struct CharInfo* charB = (struct CharInfo*)b;
+
+    if (charA->frequency != charB->frequency) {
+
+        return charB->frequency - charA->frequency;
+
+    }
+
+    else {
+
+        return charA->ascii - charB->ascii;
+
+    }
+
+}
+void modifyString(char* str) {
+
+    int freq[256] = {0}; 
+
+    struct CharInfo charInfo[256];
+
+    
+
+    int len = strlen(str);
+    for (int i = 0; i < len; i++) {
+
+        freq[str[i]]++;
+
+    }
+
+    for (int i = 0; i < 256; i++) {
+
+        charInfo[i].frequency = freq[i];
+
+        charInfo[i].ascii = i;
+
+    }
+
+    qsort(charInfo, 256, sizeof(struct CharInfo), compare);
+
+    int index = 0;
+
+    for (int i = 0; i < 256; i++) {
+
+        while (charInfo[i].frequency > 0) {
+
+            str[index++] = charInfo[i].ascii;
+
+            charInfo[i].frequency--;
+        }
+    }
+    str[index] = '\0';
+}
+int main() {
+    int T;
+    scanf("%d", &T);
+    while (T--) {
+        char str[10001];
+        scanf("%s", str);       
+        modifyString(str);       
+        printf("%s\n", str);
+    }
+    return 0;
+
+}
