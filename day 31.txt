@@ -1,0 +1,59 @@
+nosuke and Zenitsu are playing a game. They are given two strings a and b. Inosuke would win if a is a subsequence of b and if its not then Zenitsu would win. Write a program that outputs the winner of game.
+
+A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not).
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give a.
+The second line of each testcase will give b.
+Constraints
+
+1<=T<=1000
+a.length <=10000
+b.length <=10000
+Output Format
+
+For each testcase print "Inosuke" if Inosuke is the winner, print "Zenitsu" otherwise.
+
+Sample Input 0
+
+1
+oreo
+onionfrylemon
+Sample Output 0
+
+Inosuke
+Sample Input 1
+
+1
+orange
+redcolour
+Sample Output 1
+
+Zenitsu
+
+
+
+def winner_of_game(a, b):
+    i, j = 0, 0
+    while i < len(a) and j < len(b):
+        if a[i] == b[j]:
+            i += 1
+        j += 1
+
+    if i == len(a):
+        return "Inosuke"
+    else:
+        return "Zenitsu"
+
+T = int(input())
+
+for _ in range(T):
+    a = input().strip()
+    b = input().strip()
+
+    result = winner_of_game(a, b)
+    print(result)
+
+
