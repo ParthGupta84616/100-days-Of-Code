@@ -1,0 +1,101 @@
+Imagine you have a magical scroll with a word s written on it. You want to cut the scroll into smaller pieces, but you have to follow these rules:
+
+Each piece must have at least one letter on it.
+No letter can appear on more than one piece.
+When you put the pieces together, they must form the original word s.
+Cut the word in maximum number of pieces possible.
+How long is each piece? Print your answer as a list of numbers, where each number is the length of a piece.
+
+Input Format
+
+The first line will give T, the number of testcases.
+Each testcase will provide you with the word s.
+Constraints
+
+1<=T<=1000
+s.length()<=1000
+Output Format
+
+For each testcase, print the size of pieces in which you would divide the word s. (in order of division)
+
+Sample Input 0
+
+1
+ababcbacadefegdehijhklij
+Sample Output 0
+
+9 7 8
+Explanation 0
+
+The partition is "ababcbaca", "defegde", "hijhklij".
+This is a partition so that each letter appears in at most one part.
+A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits s into less parts.
+Sample Input 1
+
+1
+eccbbbbdec
+Sample Output 1
+
+10
+
+#include <stdio.h>
+
+#include <string.h>
+
+void partitionWord(char* word) {
+
+    int len = strlen(word);
+
+    int last[26]; 
+
+    int start = 0; 
+    for (int i = 0; i < len; i++) {
+
+        last[word[i] - 'a'] = i;
+
+    }
+    int end = 0;
+
+    for (int i = 0; i < len; i++) {
+
+        end = fmax(end, last[word[i] - 'a']);
+
+        if (i == end) {
+
+            printf("%d ", end - start + 1);
+
+            start = end + 1;
+
+        }
+
+    }
+
+}
+
+int main() {
+
+    int T;
+
+    scanf("%d", &T); 
+
+    
+
+    while (T--) {
+
+        char word[1001];
+
+        scanf("%s", word); 
+
+        
+
+        partitionWord(word);
+
+        printf("\n"); 
+
+    }
+
+    
+
+    return 0;
+
+}
