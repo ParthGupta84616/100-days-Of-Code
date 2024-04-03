@@ -1,0 +1,105 @@
+You are the leader of a team of anime characters, each with a different level of skill. You want to train them to become stronger, so you hire some professional trainers who can help them improve. Each trainer has a certain amount of training power, which determines how much they can teach a character.
+
+You can only pair up a character with a trainer if the character’s skill is not higher than the trainer’s power. Also, you can only pair up each character and each trainer once. You want to maximize the number of pairs you can make.
+
+How many pairs can you form between your characters and the trainers?
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will provide n and m, size of character array, and size of trainer array respectively.
+The next two line will give character array, and trainer array respectively.
+Constraints
+
+1<=T<=1000
+1<=n<=1000
+1<=m<=1000
+1<=character[i]<=10000
+1<=trainer[i]<=10000
+Output Format
+
+For each testcase, print the maximum number of pairs you can form between your characters and the trainers.
+
+Sample Input 0
+
+1
+3 4
+4 7 9
+8 2 5 8
+Sample Output 0
+
+2
+Explanation 0
+
+One of the ways we can form two matchings is as follows:
+
+character[0] can be matched with trainers[0] since 4 <= 8.
+character[1] can be matched with trainers[3] since 7 <= 8.
+It can be proven that 2 is the maximum number of matchings that can be formed.
+
+Sample Input 1
+
+1
+3 1
+1 1 1
+10
+Sample Output 1
+
+1
+Explanation 1
+
+The trainer can be matched with any of the 3 characters.
+Each character can only be matched with one trainer, so the maximum answer is 1.
+
+
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+int maxPairs(vector<int>& characters, vector<int>& trainers) {
+    sort(characters.begin(), characters.end()); 
+    sort(trainers.begin(), trainers.end());   
+
+    int pairs = 0;
+    int characterIndex = 0, trainerIndex = 0;
+
+    while (characterIndex < characters.size() && trainerIndex < trainers.size()) {
+        if (characters[characterIndex] <= trainers[trainerIndex]) {
+            pairs++;
+            characterIndex++;
+        }
+        trainerIndex++;
+    }
+
+    return pairs;
+}
+
+int main() {
+    int T;
+    cin >> T;
+
+    while (T--) {
+        int n, m;
+        cin >> n >> m; 
+
+        vector<int> characters(n), trainers(m);
+        for (int i = 0; i < n; i++) {
+            cin >> characters[i];
+        }
+        for (int i = 0; i < m; i++) {
+            cin >> trainers[i];
+        }
+        int max_pairs = maxPairs(characters, trainers);
+        cout << max_pairs << endl;
+    }
+
+    return 0;
+}
+
+
+
+
+
