@@ -1,0 +1,110 @@
+You are given an integer array nums consisting of n elements, and an integer k.
+
+Find a contiguous subarray whose length is equal to k that has the maximum average value and return this value.(Upto 5 digits of decimal)
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give n, size of nums and k.
+The second line of each testcase will give array nums
+Constraints
+
+1<=T<=1000
+n == nums.length
+1 <= k <= n <= 10^5
+-10^4 <= nums[i] <= 10^4
+Output Format
+
+For each testcase, output the maximum average value of subarray whose length is k.
+
+Sample Input 0
+
+1
+6 4
+1 12 -5 -6 50 3
+Sample Output 0
+
+12.75000
+Sample Input 1
+
+1
+1 1
+5
+Sample Output 1
+
+5.00000
+
+
+
+#include <stdio.h>
+
+double findMaxAverage(int nums[], int n, int k) {
+
+    double maxAvg = 0;
+
+    double sum = 0;
+    for (int i = 0; i < k; i++) {
+
+        sum += nums[i];
+
+    }
+
+    
+
+    maxAvg = sum / k; 
+
+    for (int i = k; i < n; i++) {
+
+        sum += nums[i] - nums[i - k]; 
+        double currAvg = sum / k; 
+        if (currAvg > maxAvg) {
+
+            maxAvg = currAvg;
+
+        }
+
+    }
+
+    
+
+    return maxAvg;
+
+}
+
+int main() {
+
+    int T;
+
+    scanf("%d", &T);
+
+    
+
+    while (T--) {
+
+        int n, k;
+
+        scanf("%d %d", &n, &k);
+
+        
+
+        int nums[n];
+
+        for (int i = 0; i < n; i++) {
+
+            scanf("%d", &nums[i]);
+
+        }
+
+        
+
+        double maxAvg = findMaxAverage(nums, n, k);
+
+        printf("%.5lf\n", maxAvg);
+
+    }
+
+    
+
+    return 0;
+
+}
