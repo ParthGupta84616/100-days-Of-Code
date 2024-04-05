@@ -1,0 +1,72 @@
+Given a binary array nums and an integer k, Print the maximum number of consecutive 1's in the array if you can flip at most k 0's.
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give n, size of nums and k.
+The second line of each testcase will give array nums.
+Constraints
+
+1<=T<=1000
+1 <= nums.length <= 10^5
+nums[i] is either 0 or 1.
+0 <= k <= nums.length
+Output Format
+
+Print the maximum number of consecutive 1's in the array if you can flip at most k 0's.
+
+Sample Input 0
+
+1
+11 2
+1 1 1 0 0 0 1 1 1 1 0
+Sample Output 0
+
+6
+Explanation 0
+
+[1,1,1,0,0,1,1,1,1,1,1]
+Bolded numbers were flipped from 0 to 1. The longest subarray is italic.
+Submissions: 105
+Max Score: 1
+Difficulty: Medium
+Rate This Challenge:
+
+    
+More
+
+
+
+
+
+def max_consecutive_ones(nums, k):
+    max_len = 0
+    start = 0
+    zero_count = 0
+
+    for end in range(len(nums)):
+        if nums[end] == 0:
+            zero_count += 1
+
+        while zero_count > k:
+            if nums[start] == 0:
+                zero_count -= 1
+            start += 1
+
+        max_len = max(max_len, end - start + 1)
+
+    return max_len
+
+def main():
+    T = int(input())
+    for _ in range(T):
+        n, k = map(int, input().split())
+        nums = list(map(int, input().split()))
+
+        result = max_consecutive_ones(nums, k)
+        print(result)
+
+if __name__ == "__main__":
+    main()
+    
+
