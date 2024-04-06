@@ -1,0 +1,76 @@
+You are an adventurer who has discovered a hidden cave full of gold coins. The cave has n chambers, each containing a positive number of coins. You want to collect as many coins as possible, but there is a catch: the cave is booby-trapped, and you can only take the coins from one chamber at a time. If you take coins from a chamber that has the same number of coins as any previous chamber, the trap will be activated and you will lose everything.
+
+How can you maximize your profit by choosing exactly one subarray of chambers to loot, such that the number of coins in each chamber is unique? The profit you get is equal to the sum of the coins in the subarray.
+
+Input Format
+
+The first line will give T,the number of testcases.
+The first line of each testcase will give n, the number of chambers in cave.
+The second line of each testcase will give the array chamber, where chamber[i] represents the number of coins the ith chamber has.
+Constraints
+
+1<=T<=1000
+1<=n<=10^5
+1<=chamber[i]<=10^4
+Output Format
+
+For each testcase, print the maximum loot/profit you can get.
+
+Sample Input 0
+
+1
+5
+4 2 4 5 6
+Sample Output 0
+
+17
+Explanation 0
+
+The optimal subarray here is [2,4,5,6].
+
+Sample Input 1
+
+1
+9
+5 2 1 2 5 2 1 2 5
+Sample Output 1
+
+8
+Explanation 1
+
+The optimal subarray here is [5,2,1] or [1,2,5].
+
+
+
+
+
+
+def maximize_profit(chambers):
+    chamber_indices = {}  
+    start_index = 0
+    max_profit = 0
+
+    for end_index, coins in enumerate(chambers):
+        if coins in chamber_indices and chamber_indices[coins] >= start_index:
+            start_index = chamber_indices[coins] + 1
+
+        chamber_indices[coins] = end_index
+        current_profit = sum(chambers[start_index : end_index + 1])
+        max_profit = max(max_profit, current_profit)
+
+    return max_profit
+
+def main():
+    total_cases = int(input())
+
+    for _ in range(total_cases):
+        n = int(input())
+        chamber = list(map(int, input().split()))
+        result = maximize_profit(chamber)
+        print(result)
+
+if __name__ == "__main__":
+    main()
+    
+
+
