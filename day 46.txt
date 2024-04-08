@@ -1,0 +1,98 @@
+You are given an array nums of non-negative integers. nums is considered special if there exists a number x such that there are exactly x numbers in nums that are greater than or equal to x.
+
+Notice that x does not have to be an element in nums.
+
+Print x if the array is special, otherwise, Print -1. It can be proven that if nums is special, the value for x is unique.
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give n, the size of nums.
+The next line of each testcase will be the array nums.
+Constraints
+
+1<=T<=1000
+1 <= nums.length <= 100
+0 <= nums[i] <= 1000
+Output Format
+
+For each testcase Print x if the array is special, otherwise, Print -1.
+
+Sample Input 0
+
+1
+2
+3 5
+Sample Output 0
+
+2
+Explanation 0
+
+There are 2 values (3 and 5) that are greater than or equal to 2.
+
+Sample Input 1
+
+1
+2
+0 0
+Sample Output 1
+
+-1
+Explanation 1
+
+No numbers fit the criteria for x. If x = 0, there should be 0 numbers >= x, but there are 2. If x = 1, there should be 1 number >= x, but there are 0. If x = 2, there should be 2 numbers >= x, but there are 0. x cannot be greater since there are only 2 numbers in nums.
+
+Sample Input 2
+
+1
+5
+0 4 3 0 4
+Sample Output 2
+
+3
+Explanation 2
+
+There are 3 values that are greater than or equal to 3.
+
+
+#include <stdio.h>
+
+int countGreaterOrEqual(int arr[], int n, int x) {
+    int count = 0;
+    for (int i = 0; i < n; i++) {
+        if (arr[i] >= x) {
+            count++;
+        }
+    }
+    return count;
+}
+
+int findSpecialNumber(int arr[], int n) {
+    for (int i = 1; i <= n; i++) {
+        int count = countGreaterOrEqual(arr, n, i);
+        if (count == i) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+    
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+        int nums[n];
+        
+        for (int i = 0; i < n; i++) {
+            scanf("%d", &nums[i]);
+        }
+        
+        int result = findSpecialNumber(nums, n);
+        printf("%d\n", result);
+    }
+    
+    return 0;
+}
