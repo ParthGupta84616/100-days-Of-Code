@@ -1,0 +1,86 @@
+You are given an integer array matchsticks where matchsticks[i] is the length of the ith matchstick. You want to use all the matchsticks to make one square. You should not break any stick, but you can link them up, and each matchstick must be used exactly one time.
+
+Print Yes and the side of square if you can make this square and No otherwise.
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give n, the number of matchsticks.
+The next line will be the array matchsticks where matchsticks[i] is the length of the ith matchstick.
+Constraints
+
+1<=T<=1000
+1 <= matchsticks.length <= 15
+1 <= matchsticks[i] <= 10^8
+Output Format
+
+For each testcase, Print Yes and the side of the square if you can make this square and No otherwise.
+
+Sample Input 0
+
+1
+5
+1 1 2 2 2
+Sample Output 0
+
+Yes 2
+Explanation 0
+
+You can form a square with length 2, one side of the square came two sticks with length 1. You can see the image here.
+
+Sample Input 1
+
+1
+5
+3 3 3 3 4
+Sample Output 1
+
+No
+Explanation 1
+
+You cannot find a way to form a square with all the matchsticks.
+
+
+
+
+def can_make_square(t, testcases):
+    for i in range(t):
+        n = testcases[i][0]
+        matchsticks = testcases[i][1]
+
+        total_length = sum(matchsticks)
+
+        if total_length % 4 != 0:
+            print("No")
+        else:
+            side_length = total_length // 4
+            matchsticks.sort(reverse=True)
+
+            def dfs(index, sides):
+                if index == n:
+                    return all(side == side_length for side in sides)
+
+                for j in range(4):
+                    if sides[j] + matchsticks[index] <= side_length:
+                        sides[j] += matchsticks[index]
+                        if dfs(index + 1, sides):
+                            return True
+                        sides[j] -= matchsticks[index]
+
+                return False
+
+            if dfs(0, [0, 0, 0, 0]):
+                print(f"Yes {side_length}")
+            else:
+                print("No")
+
+t = int(input())
+testcases = []
+for _ in range(t):
+    n = int(input())
+    matchsticks = list(map(int, input().split()))
+    testcases.append((n, matchsticks))
+
+can_make_square(t, testcases)
+
+
