@@ -1,0 +1,68 @@
+You and your friend are having a festive game night on Christmas Eve. You decide to play a game of Nim with some candy canes.
+
+There are n candy canes on the table, and you go first.
+On each turn, you can take 1, 2, or 3 candy canes from the table.
+The one who takes the last candy cane wins the game and gets to eat it.
+Determine the winner of the game, assuming both you and your friend play smartly. Print Yes if you can win, or No if you cannot.
+
+Input Format
+
+The first line will give T, the number of testcases.
+Each testcase will give n, the number of candies.
+Constraints
+
+1<=T<=1000
+1 <= n <= 2^31 - 1
+Output Format
+
+For each testcase, print Yes if you can win, or No if you cannot.
+
+Sample Input 0
+
+1
+4
+Sample Output 0
+
+No
+Explanation 0
+
+These are the possible outcomes: 1. You take 1 candy. Your friend takes 3 candies, including the last one. Your friend wins. 2. You take 2 candies. Your friend takes 2 candies, including the last one. Your friend wins. 3. You take 3 candies. Your friend takes the last one. Your friend wins. In all outcomes, your friend wins.
+
+Sample Input 1
+
+2
+1
+2
+Sample Output 1
+
+Yes
+Yes
+
+
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int n;
+        scanf("%d", &n);
+        if (n % 4 == 0) {
+            printf("No\n");
+        } else {
+            printf("Yes\n");
+        }
+    }
+
+    return 0;
+}
