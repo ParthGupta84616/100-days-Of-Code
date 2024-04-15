@@ -1,0 +1,63 @@
+Dinesh is playing a game with his friend Mahesh. They have a pile containg N coins. Players take alternate turns, removing some coins from the pile. On each turn, a player can remove either one coin or coins equal to some prime power (i.e. p^x coins, where p - prime number and x - positive integer). Game ends when the pile becomes empty. The player who can not make a move in his turn loses.
+
+Dinesh plays first. Your task is to find out who will win the game, provided that both of the player play optimally.
+
+Input Format
+
+The first line of the input contains an integer T denoting the number of test cases. The description of T test cases follows.
+The only line of each test case contains one integer N.
+Constraints
+
+1 ≤ T ≤ 1000
+1 ≤ N ≤ 10^9
+Output Format
+
+For each test case, output a single line containing one word - the name of the winner of the game. Print "Dinesh" (without quotes) if Dinesh wins the game, print "Mahesh" (without quotes) otherwise.
+
+Sample Input 0
+
+2
+1
+8
+Sample Output 0
+
+Dinesh
+Dinesh
+
+
+
+#include <stdio.h>
+#include <stdbool.h>
+bool isPrime(int n) {
+    if (n <= 1) return false;
+    if (n <= 3) return true;
+    if (n % 2 == 0 || n % 3 == 0) return false;
+    for (int i = 5; i * i <= n; i += 6) {
+        if (n % i == 0 || n % (i + 2) == 0) return false;
+    }
+    return true;
+}
+
+char* findWinner(int N) {
+    if (isPrime(N) || N % 6 != 0) {
+        return "Dinesh";
+    } else {
+        return "Mahesh";
+    }
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    while (T--) {
+        int N;
+        scanf("%d", &N);
+
+        char* winner = findWinner(N);
+        printf("%s\n", winner);
+    }
+
+    return 0;
+}
+
