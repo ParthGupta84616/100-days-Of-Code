@@ -1,0 +1,89 @@
+Raju and Chutki are playing a game. There are two piles numbered 1 and 2. Pile 1 contains X stones while Pile 2 contains Y stones.
+
+Raju starts the game.
+
+In his turn, Raju can either remove 1 stone each from both the piles or remove 2 stones from pile 1.
+On the other hand, Chutki, in her turn, can either remove 1 stone each from both the piles or remove 2 stones from pile 2.
+The player who cannot make a move loses. Determine the winner if both players play optimally.
+
+Input Format
+
+The first line of input will contain a single integer T, denoting the number of test cases.
+Each test case consists of a single line containing two integers X and Y, the initial number of stones in piles 1 and 2 respectively.
+Constraints
+
+1<=T<=1000
+1<=X,Y<=10^9
+Output Format
+
+For each test case, output Raju if Raju wins the game, and Chutki otherwise.
+
+Sample Input 0
+
+3
+1 10
+2 2
+4 2
+Sample Output 0
+
+Chutki
+Chutki
+Raju
+Explanation 0
+
+Test case 1: Consider the following sequence of moves:
+
+Raju removes 1 stone each from both the piles. Thus, pile 1 has no stone left while pile 2 has 9 stones left.
+Chutki removes 2 stones from pile 2. Thus, pile 1 has no stones left while pile 2 has 7 stones left.
+Since Raju has no valid move, he loses. Note that this might not be an optimal sequence of moves.
+
+Test case 2: Consider the following sequence of moves:
+
+Raju removes 1 stone each from both the piles. Thus, pile 1 has 1 stone left and pile 2 has 1 stone left.
+Chutki removes 1 stone each from both the piles. Thus, pile 1 has no stones left and pile 2 has no stones left.
+Since Raju has no valid move, he loses. Note that this might not be an optimal sequence of moves.
+
+
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    // your code goes here
+    int t;
+    cin>>t;
+    vector<string> ans;
+    while(t--){
+        long long x,y;
+        cin>>x>>y;
+        
+        long long dif = abs(x-y);
+        if(dif>=2){
+            if(x>y)ans.push_back("Raju");
+            else ans.push_back("Chutki");
+        }
+        else{
+            if(x == y){
+                if(x%2)ans.push_back("Raju");
+                else ans.push_back("Chutki");
+            }
+            else{
+                 
+                   long long mn = min(x,y);
+                   if(mn%2)ans.push_back("Raju");
+                   else ans.push_back("Chutki");
+                
+            }
+        }
+    }
+    for(auto it:ans){
+        cout<<it<<endl;
+    }
+    return 0;
+}
+
+
+
+
