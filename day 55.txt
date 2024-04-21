@@ -1,0 +1,77 @@
+Tweedle-Dee and Tweedle-Dum are in a fierce battle playing even-odd nim. This novel game is played on N heaps. Heap i contains ai stones.
+
+Like normal nim, Tweedle-Dee and Tweedle-Dum alternate taking a positive number of stones from any single one of the heaps, and the player that can't remove stones loses. However Tweedle-Dee can only take an even number of stones, and Tweedle-Dum can only take an odd number of stones.
+
+Alice doesn't want to wait until the end of the game, so she asks you to determine the winner of the game. Remember that Tweedle-Dee and Tweedle-Dum are legendary grandmasters of combinatorial games, so they always play optimally.
+
+Input Format
+
+The first line of the input contains an integer T denoting the number of test cases. The description of T test cases follows.
+The first line of each case consists of an integer N the number of heaps, and a string P the player that starts the game. String P is equal to "Dee" if Tweedle-Dee goes first, or "Dum" if Tweedle-Dum goes first.
+The second line of each case contains N space separated integers ai the number of stones of the i-th heap.
+Constraints
+
+1 ≤ T ≤ 50
+1 ≤ N ≤ 50
+1 ≤ ai ≤ 50
+Output Format
+
+For each test case, output a single line containing either "Dee" if Twedle-Dee winns the game or "Dum" otherwise.
+
+Sample Input 0
+
+1
+2 Dee
+2 2
+Sample Output 0
+
+Dum
+Explanation 0
+
+Tweedle-Dee takes two stones from any of the heaps leaving just one non empty heap, next Tweedle-Dum takes one stone and the game finishes.
+
+
+
+
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+int main() {
+    int T;
+    cin>>T;
+    
+    int j=0;
+    while(j<T)
+    {
+        int n;
+        cin>>n;
+        
+        int heap[n];
+        
+        string str;
+        cin>>str;
+        
+        for(int i=0 ; i<n ; i++)
+        {
+            cin>>heap[i];
+        }
+        
+        if((n==1) && (heap[0]%2==0) && (str=="Dee"))
+        {
+            cout<<"Dee\n";   
+        }
+        else
+        {
+            cout<<"Dum\n";
+        }
+        j++;
+    }
+    return 0;
+}
+
