@@ -1,0 +1,78 @@
+You are given an array of integers nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Print the maximum of K values each time the sliding window moves right by one position.
+
+Input Format
+
+The first line will give T, the number of testcase.
+The first line of each testcase will give the nums.length and k.
+The second line will give the array nums.
+Constraints
+
+1 <= T <= 1000
+1 <= nums.length <= 10^5
+-10^4 <= nums[i] <= 10^4
+1 <= k <= nums.length
+Output Format
+
+For each testcase, print the maximum of K values each time the sliding window moves right by one position.
+
+Sample Input 0
+
+2
+8 3
+1 3 -1 -3 5 3 6 7
+1 1
+1
+Sample Output 0
+
+3 3 5 5 6 7
+1
+Explanation 0
+
+For Testcase 1:-
+
+[1 3 -1] -3 5 3 6 7 (here Max=3)
+1 [3 -1 -3] 5 3 6 7 (here Max=3)
+1 3 [-1 -3 5] 3 6 7 (here Max=5)
+1 3 -1 [-3 5 3] 6 7 (here Max=5)
+1 3 -1 -3 [5 3 6] 7 (here Max=6)
+1 3 -1 -3 5 [3 6 7] (here Max=7)
+For Testcase 2:-
+
+[1] (here Max=1)
+
+
+
+
+
+
+
+
+def max_in_sliding_window(nums, k):
+    result = []
+    window = []
+
+    for i in range(len(nums)):
+        while window and window[0] < i - k + 1:
+            window.pop(0)
+        while window and nums[window[-1]] < nums[i]:
+            window.pop()
+        window.append(i)
+        if i >= k - 1:
+            result.append(nums[window[0]])
+
+    return result
+
+def main():
+    T = int(input())
+    
+    for _ in range(T):
+        n, k = map(int, input().split())
+        nums = list(map(int, input().split()))
+        
+        result = max_in_sliding_window(nums, k)
+        print(" ".join(map(str, result)))
+
+if __name__ == "__main__":
+    main()
+
+
