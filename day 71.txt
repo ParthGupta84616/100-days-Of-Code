@@ -1,0 +1,91 @@
+You are given an unsorted array nums of n elements, where each element is an integer. Your task is to create a binary search tree from the array and print the height of the tree. A binary search tree is a binary tree where the value of each node is greater than or equal to the values of its left subtree and less than the values of its right subtree. The height of a binary tree is the number of edges on the longest path from the root node to a leaf node.
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give n, the number of elements in array nums.
+The second line will give the array nums of n elements out of which the tree would be constructed.
+Constraints
+
+1 <= T <= 1000
+1 <= n <= 100
+-10^3 <= nums[i] <= 10^3
+Output Format
+
+For each testcase, print the height of the binary search tree.
+
+Sample Input 0
+
+1
+7
+5 3 7 2 4 6 8
+Sample Output 0
+
+3
+Explanation 0
+
+the height of the bst constructed from nums will be 3 with root = 5
+
+
+
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+struct Node {
+  int data; 
+  Node* left; 
+  Node* right; 
+  Node(int value) {
+    data = value;
+    left = NULL;
+    right = NULL;
+  }
+};
+
+Node* insert(Node* root, int value) {
+  if (root == NULL) {
+    return new Node(value);
+  }
+  if (value <= root->data) {
+    root->left = insert(root->left, value);
+  }
+  else if (value > root->data) {
+    root->right = insert(root->right, value);
+  }
+  return root;
+}
+int height(Node* root) {
+  if (root == NULL) {
+    return 0;
+  }
+  int leftHeight = height(root->left);
+  int rightHeight = height(root->right);
+  return max(leftHeight, rightHeight) + 1;
+}
+int main() {
+
+  int t;
+  cin>>t;
+  vector<int> ans;
+  while(t--){
+
+  Node* root = NULL;
+  int n;
+  cin>>n;
+  vector<int> aux(n);
+  for(int i=0;i<n;i++){
+    cin>>aux[i];
+  }
+  for (int i = 0; i < n; i++) {
+    root = insert(root, aux[i]);
+  }
+  ans.push_back(height(root));
+  }
+  for(auto it:ans){
+    cout<<it<<endl;
+  }
+  return 0;
+}
+
