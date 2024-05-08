@@ -1,0 +1,106 @@
+Given an array nums of n elements, you need to construct a binary search tree out of that array (just like previous question A binary search tree is a binary tree where the value of each node is greater than or equal to the values of its left subtree and less than the values of its right subtree ).
+
+find the maximum value v for which there exist different nodes a and b where v = |a.val - b.val| and a is an ancestor of b.
+
+A node a is an ancestor of b if either: any child of a is equal to b or any child of a is an ancestor of b.
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give n, the number of elements in array nums.
+The second line will give the array nums of n elements out of which the tree would be constructed.
+Constraints
+
+1 <= T <= 1000
+1 <= n <= 100
+-10^3 <= nums[i] <= 10^3
+Output Format
+
+For each testcase, print the maximum value v for which there exist different nodes a and b where v = |a.val - b.val| and a is an ancestor of b.
+
+Sample Input 0
+
+1
+9
+8 3 10 1 6 14 4 7 13
+Sample Output 0
+
+7
+Explanation 0
+
+We have various ancestor-node differences, some of which are given below :
+
+|8 - 3| = 5
+|3 - 7| = 4
+|8 - 1| = 7
+|10 - 13| = 3
+Among all possible differences, the maximum value of 7 is obtained by |8 - 1| = 7.
+
+
+
+
+
+
+
+class TreeNode:
+    def __init__(self, value):
+        self.val = value
+        self.left = None
+        self.right = None
+
+def constructBST(nums):
+    if not nums:
+        return None
+
+    root = TreeNode(nums[0])
+
+    for num in nums[1:]:
+        insertNode(root, num)
+
+    return root
+
+def insertNode(root, value):
+    if not root:
+        return TreeNode(value)
+
+    if value < root.val:
+        root.left = insertNode(root.left, value)
+    else:
+        root.right = insertNode(root.right, value)
+
+    return root
+
+def maxAncestorDiff(root):
+    if not root:
+        return 0
+
+    return max(
+        maxAncestorDiff(root.left),
+        maxAncestorDiff(root.right),
+        maxDescendantDiff(root.left, root.val),
+        maxDescendantDiff(root.right, root.val)
+    )
+
+def maxDescendantDiff(node, ancestor_val):
+    if not node:
+        return 0
+
+    return max(
+        abs(node.val - ancestor_val),
+        maxDescendantDiff(node.left, ancestor_val),
+        maxDescendantDiff(node.right, ancestor_val)
+    )
+
+# Input reading and processing
+T = int(input())
+for _ in range(T):
+    n = int(input())
+    nums = list(map(int, input().split()))
+
+    # Construct the binary search tree
+    root = constructBST(nums)
+
+    # Find and print the maximum ancestor-node difference
+    result = maxAncestorDiff(root)
+    print(result)
+
