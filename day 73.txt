@@ -1,0 +1,124 @@
+You are given an array nums of n elements. Construct a binary search tree from the given array (just like previous days questions).then print the length of longest zig-zag path
+
+A ZigZag path for a binary tree is defined as follow:
+
+Choose any node in the binary tree and a direction (right or left).
+If the current direction is right, move to the right child of the current node; otherwise, move to the left child.
+Change the direction from right to left or from left to right.
+Repeat the second and third steps until you can't move in the tree.
+Zigzag length is defined as the number of nodes visited - 1. (A single node has a length of 0).
+Print the longest ZigZag path contained in that tree.
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give n, the size of array nums.
+The second line of each testcase will give the array nums.
+Constraints
+
+1 <= T <= 1000
+1 <= n <= 100
+-10^3 <= nums[i] <= 10^3
+Output Format
+
+For each testcase, print the length of longest zigzag path contained in the tree constructed by given array nums.
+
+Sample Input 0
+
+1
+10
+1 10 2 9 3 8 4 7 5 6
+Sample Output 0
+
+9
+
+
+
+
+#include <bits/stdc++.h>
+using namespace std;
+struct Node {
+  int data; 
+  Node* left; 
+  Node* right; 
+  Node(int value) {
+    data = value;
+    left = NULL;
+    right = NULL;
+  }
+};
+Node* insert(Node* root, int value) {
+  if (root == NULL) {
+    return new Node(value);
+  }
+  if (value <= root->data) {
+    root->left = insert(root->left, value);
+  }
+  else if (value > root->data) {
+    root->right = insert(root->right, value);
+  }
+
+  return root;
+}
+int height(Node* root) {
+  if (root == NULL) {
+    return 0;
+  }
+
+  int leftHeight = height(root->left);
+  int rightHeight = height(root->right);
+
+  return max(leftHeight, rightHeight) + 1;
+}
+
+class Solution {
+    int count=0;
+    void finder(Node* node,bool isPrevleft,int steps){
+        if(!node)return;
+        count=max(count,steps);
+        if(isPrevleft){
+            finder(node->right,false,steps+1);
+            finder(node->left,true,1);
+        }else{
+            finder(node->left,true,steps+1);
+            finder(node->right,false,1);
+        }
+    }
+public:
+    int longestZigZag(Node* root) {
+        count=0;
+        finder(root,true,0);
+        finder(root,false,0);
+        return count;
+    }
+};
+
+// A main function to test the code
+int main() {
+
+  int t;
+  cin>>t;
+  vector<int> ans;
+  Solution s=Solution();
+  while(t--){
+
+  Node* root = NULL;
+  int n;
+  cin>>n;
+  vector<int> aux(n);
+  for(int i=0;i<n;i++){
+    cin>>aux[i];
+  }
+  for (int i = 0; i < n; i++) {
+    root = insert(root, aux[i]);
+  }
+  ans.push_back(s.longestZigZag(root));
+  }
+  for(auto it:ans){
+    cout<<it<<endl;
+  }
+  return 0;
+}
+
+
+
