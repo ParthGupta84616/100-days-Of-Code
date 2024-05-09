@@ -1,0 +1,107 @@
+You are given an array nums of n elements. Construct a binary search tree from the given array (just like previous days questions).Print the sum of all left leaves.
+
+A leaf is a node with no children. A left leaf is a leaf that is the left child of another node.
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give n, the size of array nums.
+The second line of each testcase will give the array nums.
+Constraints
+
+1 <= T <= 1000
+1 <= n <= 100
+-10^3 <= nums[i] <= 10^3
+Output Format
+
+For each testcase, Print the sum of all left leaves.
+
+Sample Input 0
+
+1
+7
+5 3 7 1 4 6 10
+Sample Output 0
+
+7
+Explanation 0
+
+Left leaves are 1 and 6
+
+
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    public static class BSTNode{
+        int data;
+        BSTNode left;
+        BSTNode right;
+        
+        BSTNode(int data){
+            this.data = data;
+        }
+    }
+    
+    private static BSTNode formBSTHelper(BSTNode root, int data){ 
+        if(root == null){
+            BSTNode newNode = new BSTNode(data);
+            return newNode;
+        }
+        if(data <= root.data){
+            root.left = formBSTHelper(root.left, data);
+        }
+        
+        else{    
+            root.right = formBSTHelper(root.right, data);
+        }
+        return root;
+    }    
+    private static BSTNode formBST(int[] nums){
+        BSTNode root = new BSTNode(nums[0]);
+        int i = 1;
+        
+        while(i < nums.length){
+            root = formBSTHelper(root, nums[i]); 
+            i++;
+        }
+        return root;
+    }
+    
+    private static int sumOfLeftLeaves(BSTNode root, boolean direction){
+        if(root == null){
+            return 0;
+        }
+        
+        if(root.left == null && root.right == null && direction){
+            return root.data;
+        }
+        
+        int sum = 0;
+        sum+= sumOfLeftLeaves(root.left, true);
+        sum+= sumOfLeftLeaves(root.right, false);
+        
+        return sum;   
+    }
+
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        int t = s.nextInt();
+        for(int i = 0; i<t; i++){
+            int n = s.nextInt();
+            
+            int nums[] = new int[n];
+            for(int j = 0; j<n; j++){
+                nums[j] = s.nextInt();
+            }
+            BSTNode root = formBST(nums);
+            
+            int sum = 0;
+            sum+= sumOfLeftLeaves(root.left, true);
+            sum+= sumOfLeftLeaves(root.right, false);
+            System.out.println(sum);
+        }
+    }
+}
