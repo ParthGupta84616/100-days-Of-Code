@@ -1,0 +1,81 @@
+There are n cities. Some of them are connected, while some are not. If city a is connected directly with city b, and city b is connected directly with city c, then city a is connected indirectly with city c.
+
+A province is a group of directly or indirectly connected cities and no other cities outside of the group.
+
+You are given an n x n matrix isConnected where isConnected[i][j] = 1 if the ith city and the jth city are directly connected, and isConnected[i][j] = 0 otherwise.
+
+Print the total number of provinces.
+
+Input Format
+
+The first line will give T, the number of testcases.
+The first line of each testcase will give n, the number of cities.
+The next line of each testcaase will give the matrix isConnected of length n x n.
+Constraints
+
+1 <= T <= 1000
+1 <= n <= 200
+n == isConnected.length
+n == isConnected[i].length
+isConnected[i][j] is 1 or 0.
+isConnected[i][i] == 1
+isConnected[i][j] may or maynot be equal to isConnected[j][i]
+Output Format
+
+For each testcase, print the total number of provinces.
+
+Sample Input 0
+
+1
+3
+1 1 0
+1 1 0
+0 0 1
+Sample Output 0
+
+2
+Sample Input 1
+
+1
+3
+1 0 0
+0 1 0
+0 0 1
+Sample Output 1
+
+3
+
+
+def dfs(city, isConnected, visited):
+    visited[city] = True
+    for neighbor in range(len(isConnected)):
+        if isConnected[city][neighbor] == 1 and not visited[neighbor]:
+            dfs(neighbor, isConnected, visited)
+
+def count_provinces(isConnected):
+    n = len(isConnected)
+    visited = [False] * n
+    provinces = 0
+
+    for city in range(n):
+        if not visited[city]:
+            dfs(city, isConnected, visited)
+            provinces += 1
+
+    return provinces
+
+def main():
+    T = int(input())
+    for _ in range(T):
+        n = int(input())
+        isConnected = [list(map(int, input().split())) for _ in range(n)]
+        result = count_provinces(isConnected)
+        print(result)
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
