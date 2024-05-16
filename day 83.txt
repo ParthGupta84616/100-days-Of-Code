@@ -1,0 +1,84 @@
+You are given an integer num. You can swap two digits at most once to get the maximum valued number.
+
+Print the maximum valued number you can get.
+
+Input Format
+
+The first line will give T, the number of testcases.
+Each testcase will give num.
+Constraints
+
+0 <= T <= 1000
+0 <= num <= 10^8
+Output Format
+
+For each testcase, Print the maximum valued number you can get.
+
+Sample Input 0
+
+1
+2736
+Sample Output 0
+
+7236
+Explanation 0
+
+Swap the number 2 and the number 7.
+
+Sample Input 1
+
+1
+9973
+Sample Output 1
+
+9973
+Explanation 1
+
+No Swap
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int max_valued_number(int num) {
+    char num_str[15]; 
+    sprintf(num_str, "%d", num);
+
+    int max_num = num;
+
+    for (int i = 0; num_str[i] != '\0'; ++i) {
+        for (int j = i + 1; num_str[j] != '\0'; ++j) {
+            
+            char temp = num_str[i];
+            num_str[i] = num_str[j];
+            num_str[j] = temp;
+
+            int swapped_num = atoi(num_str);
+
+            if (swapped_num > max_num) {
+                max_num = swapped_num;
+            }
+            temp = num_str[i];
+            num_str[i] = num_str[j];
+            num_str[j] = temp;
+        }
+    }
+
+    return max_num;
+}
+
+int main() {
+    int T;
+    scanf("%d", &T);
+
+    for (int i = 0; i < T; ++i) {
+        int num;
+        scanf("%d", &num);
+
+        int result = max_valued_number(num);
+        printf("%d\n", result);
+    }
+
+    return 0;
+}
