@@ -1,0 +1,84 @@
+There is a regular convex polygon with n vertices. The vertices are labeled from 0 to n - 1 in a clockwise direction, and each vertex has exactly one monkey. The following figure (click here) shows a convex polygon of 6 vertices.
+
+Each monkey moves simultaneously to a neighboring vertex. A neighboring vertex for a vertex i can be:
+
+the vertex (i + 1) % n in the clockwise direction, or the vertex (i - 1 + n) % n in the counter-clockwise direction. A collision happens if at least two monkeys reside on the same vertex after the movement or intersect on an edge.
+
+Print the number of ways the monkeys can move so that at least one collision happens. Since the answer may be very large, print it modulo 10^9 + 7.
+
+Note that each monkey can only move once.
+
+Input Format
+
+The first line will give T, the number of testcases.
+Each testcase will give n, the number of vertices.
+Constraints
+
+1 <= T <= 1000
+3 <= n <= 10^9
+Output Format
+
+For each testcase, Print the number of ways the monkeys can move so that at least one collision happens. Since the answer may be very large, print it modulo 10^9 + 7.
+
+Sample Input 0
+
+1
+3
+Sample Output 0
+
+6
+Explanation 0
+
+There are 8 total possible movements. Two ways such that they collide at some point are:
+
+Monkey 1 moves in a clockwise direction; monkey 2 moves in an anticlockwise direction; monkey 3 moves in a clockwise direction. Monkeys 1 and 2 collide.
+Monkey 1 moves in an anticlockwise direction; monkey 2 moves in an anticlockwise direction; monkey 3 moves in a clockwise direction. Monkeys 1 and 3 collide.
+It can be shown 6 total movements result in a collision.
+
+Sample Input 1
+
+1
+4
+Sample Output 1
+
+14
+Explanation 1
+
+It can be shown that there are 14 ways for the monkeys to collide.
+
+
+
+
+
+#include <iostream>
+using namespace std;
+
+const int MOD = 1e9 + 7;
+
+long long power(long long base, long long exp) {
+    long long result = 1;
+    while (exp > 0) {
+        if (exp % 2 == 1) {
+            result = (result * base) % MOD;
+        }
+        base = (base * base) % MOD;
+        exp /= 2;
+    }
+    return result;
+}
+
+int main() {
+    int T;
+    cin >> T;
+
+    while (T--) {
+        long long n;
+        cin >> n;
+
+        long long ans = (power(2, n) - 2 + MOD) % MOD;
+        cout << ans << endl;
+    }
+
+    return 0;
+}
+
