@@ -1,0 +1,76 @@
+Given a string s, print "yes" if the s can be palindrome after deleting at most one character from it and print "no" otherwise.
+
+Input Format
+
+The first line will give T, the number of testcases.
+Each testcase will give a string s.
+Constraints
+
+1 <= T <= 1000
+1 <= s.length <= 10^5
+s consists of lowercase English letters.
+Output Format
+
+For each testcase, print "yes" if the s can be palindrome after deleting at most one character from it and print "no" otherwise.
+
+Sample Input 0
+
+3
+aba
+abca
+abc
+Sample Output 0
+
+yes
+yes
+no
+Explanation 0
+
+in 2nd testcase, you can delete c
+
+
+
+
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+bool isPalindrome(string s, int left, int right) {
+    while (left < right) {
+        if (s[left] != s[right]) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+    return true;
+}
+
+bool canBePalindrome(string s) {
+    int left = 0, right = s.length() - 1;
+    while (left < right) {
+        if (s[left] != s[right]) {
+            return isPalindrome(s, left + 1, right) || isPalindrome(s, left, right - 1);
+        }
+        left++;
+        right--;
+    }
+    return true;
+}
+
+int main() {
+    int T;
+    cin >> T;
+    while (T--) {
+        string s;
+        cin >> s;
+        if (canBePalindrome(s)) {
+            cout << "yes" << endl;
+        } else {
+            cout << "no" << endl;
+        }
+    }
+    return 0;
+}
